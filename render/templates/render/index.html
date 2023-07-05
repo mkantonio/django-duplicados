@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+<body>
+<main class="container">
+    <div class="row text-center justify-content-center">
+        <div class="col">
+            <h1 class="display-4">Hello World!</h1>
+        </div>
+    </div>
+
+    <form id="form" method="post">
+
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" id="label1" class="form-label">Columna 1</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="textarea1" rows="15"></textarea>
+                    <label for="exampleFormControlTextarea1" id="labelrojo" class="form-label" hidden>Hay algo</label>
+                </div>
+
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea2" id="label2" class="form-label">Columna 2</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea2" name="textarea2" rows="15"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Realizar comparacion</button>
+
+            </div>
+        </div>
+    </form>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+
+
+</body>
+<script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', function() {
+    /*
+    function countLines(textarea) {
+        let lines = textarea.value.split('\n');
+        let lineCount = lines.length;
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length === 0) {
+                lineCount--;
+            }
+        }
+        return lineCount;
+    }
+
+    let textarea = document.getElementById('exampleFormControlTextarea1');
+    let label = document.getElementById('label1');
+    textarea.addEventListener('input', function(e) {
+        if (e.inputType === 'insertFromPaste') {
+
+            let lineCount = countLines(textarea);
+            label.innerHTML = 'Líneas: ' + lineCount;
+        }
+    });
+    */
+
+    let textarea = document.getElementById('exampleFormControlTextarea1');
+    let textarea2 = document.getElementById('exampleFormControlTextarea2');
+    let label = document.getElementById('label1');
+    let label2 = document.getElementById('label2');
+
+    function countLines(textareap) {
+        let lines = textareap.value.split('\n');
+        let lineCount = lines.length;
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length === 0) {
+                lineCount--;
+            }
+        }
+        return lineCount;
+    }
+
+    textarea.addEventListener('input', function() {
+        let lineCount = countLines(this);
+        label.innerHTML = `Columna 1 - Líneas: ${lineCount}`;
+        /*
+        let labelrojo = document.getElementById('labelrojo');
+        if(lineCount = 0){
+            labelrojo.setAttribute('hidden');
+        }
+        labelrojo.style.color = 'red';
+        labelrojo.removeAttribute('hidden');
+        */
+    });
+
+    textarea2.addEventListener('input', function() {
+        let lineCount = countLines(this);
+        label2.innerHTML = `Columna 2 - Líneas: ${lineCount}`;
+    });
+
+
+
+    const form = document.getElementById('form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        let ta1 = document.querySelector("#exampleFormControlTextarea1").value;
+        let ta2 = document.querySelector("#exampleFormControlTextarea2").value;
+        ta1 = JSON.stringify(ta1);
+        ta2 = JSON.stringify(ta2);
+        let dataform = {"field1": ta1, "field2": ta2}
+        console.log(dataform)
+
+        fetch('post_request/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Content-Encoding": "br",
+
+            },
+            body: dataform
+        })
+        .then(response => {
+            if (response.ok){
+                return response.text();
+            }
+            throw new Error(response.status);
+        })
+
+        .then(data => {
+            console.log(data);
+            let labelrojo = document.getElementById('labelrojo');
+            labelrojo.style.color = 'red';
+            labelrojo.removeAttribute('hidden');
+        })
+        .catch(error => console.log(error));
+    });
+
+});
+</script>
+</html>
