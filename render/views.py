@@ -2,13 +2,9 @@ from django.http import JsonResponse
 import pandas as pd
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework import status
 
 # df = pd.read_excel('nuevo.xlsx', engine=openpyxl)
-
-
-
-
 
 
 def index(request):
@@ -17,18 +13,27 @@ def index(request):
 
 @csrf_exempt
 def post_request(request):
-    if request.method == 'POST':
+    if request.method == 'POST':      
+        # print(request.POST)
+        textarea1 = request.POST.get('ntextarea1')
+        textarea2 = request.POST.get('ntextarea2')
+        t1 = textarea1.split("\r\n")
+        t2 = textarea2.split("\r\n")
+        t2.extend([None] * (len(t1) - len(t2)))
         # df = pd.read_excel('nuevo.xlsx')
-        # not_in_d = ~df['C'].isin(df['D'])
-        # result = df['C'][not_in_d]
-        # print(result)
-        # procesar los datos recibidos
-        body = request.POST.get('body')
-        textarea1 = body.field1
-        textarea2 = body.field2
-        print(textarea1)
-        print(textarea2)
-        response_data = {'result': 'success'}
-        return JsonResponse(response_data)
+        data = {
+            'A': t1,
+            'B': t2
+        }
+        # print(data)
+        df = pd.DataFrame(data)
+        # print(df.to_markdown())
+        not_in_b = ~df['A'].isin(df['B'])
+        result = df['A'][not_in_b]
+        # print(result.to_markdown())
+        rr = result.to_json()
+        response_data = {'result': rr}
+        return JsonResponse(response_data,
+                            status=status.HTTP_200_OK)
     else:
         return JsonResponse({'result': 'error'})
