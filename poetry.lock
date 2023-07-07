@@ -48,8 +48,6 @@ files = [
 tzdata = ["tzdata"]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "brotli"
 version = "1.0.9"
 description = "Python bindings for the Brotli compression library"
@@ -142,7 +140,6 @@ files = [
 ]
 
 [[package]]
->>>>>>> web
 name = "django"
 version = "4.2.3"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -408,8 +405,6 @@ doc = ["sphinx"]
 test = ["pytest", "pytest-cov"]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "tabulate"
 version = "0.9.0"
 description = "Pretty-print tabular data"
@@ -425,7 +420,6 @@ files = [
 widechars = ["wcwidth"]
 
 [[package]]
->>>>>>> web
 name = "typing-extensions"
 version = "4.7.1"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -449,12 +443,6 @@ files = [
     {file = "tzdata-2023.3.tar.gz", hash = "sha256:11ef1e08e54acb0d4f95bdb1be05da659673de4acbd21bf9c69e94cc5e907a3a"},
 ]
 
-<<<<<<< HEAD
-[metadata]
-lock-version = "2.0"
-python-versions = "^3.8"
-content-hash = "d4d2c8fabc08fda9f0eb4fb4af92a73b93b05d096ab4ef4dcfc3b62a1b23a24e"
-=======
 [[package]]
 name = "whitenoise"
 version = "6.5.0"
@@ -477,4 +465,3 @@ brotli = ["Brotli"]
 lock-version = "2.0"
 python-versions = "^3.8"
 content-hash = "7026372da25edaecd3521091357d057dbac8599087cf2731b7fb9e1fe84c492d"
->>>>>>> web
