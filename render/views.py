@@ -13,17 +13,13 @@ def index(request):
 
 @csrf_exempt
 def post_request(request):
-    print("post_request INTRO@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq")
-    if request.method == 'POST':
-        # procesar los datos recibidos
+    if request.method == 'POST':      
         # print(request.POST)
         textarea1 = request.POST.get('ntextarea1')
         textarea2 = request.POST.get('ntextarea2')
         t1 = textarea1.split("\r\n")
         t2 = textarea2.split("\r\n")
         t2.extend([None] * (len(t1) - len(t2)))
-        # print(t1)
-        # print(t2)
         # df = pd.read_excel('nuevo.xlsx')
         data = {
             'A': t1,
@@ -34,7 +30,7 @@ def post_request(request):
         # print(df.to_markdown())
         not_in_b = ~df['A'].isin(df['B'])
         result = df['A'][not_in_b]
-        print(result.to_markdown())
+        # print(result.to_markdown())
         rr = result.to_json()
         response_data = {'result': rr}
         return JsonResponse(response_data,
